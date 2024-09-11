@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design - Wheel 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="discoveryChart">
+
+        <div id="pieContainer">
+            
+            <svg id="chart" x="0px" y="0px" width="239.3px" height="239px" viewBox="0 0 239.3 239">
+                <path id="orange" d="M119.5,58c29.5,0,54.2,20.7,60.2,48.4l56.9-12.1C225,40.4,176.9,0,119.5,0c-0.1,0,0.5,0-0.5,0v58.1
+                    C120,58.1,119.4,58,119.5,58z"/>
+                <path id="green" d="M58,119.5c0-33.9,28-61.3,61-61.5V0C54,0.1,0,53.6,0,119.5c0,29.1,10.6,55.9,27.9,76.6l44.4-37.3
+                    C63.4,148.1,58,134.4,58,119.5z"/>
+                <path id="red" d="M179.8,106.5c0.9,4.2,1.4,8.6,1.4,13c0,24.3-14.1,45.3-34.6,55.3l25.5,52.2c39.8-19.4,67.2-60.2,67.2-107.5
+                    c0-8.6-0.9-17-2.7-25.1L179.8,106.5z"/>
+                <path id="blue" d="M119.8,181c-19,0-36-8.6-47.3-22.2L28,196.1c21.9,26.2,54.9,42.9,91.7,42.9c18.8,0,36.5-4.3,52.3-12
+                    l-25.5-52.2C138.5,178.8,129.4,181,119.8,181z"/>
+            </svg>
+        
+            
+            <svg id="lines" width="69.1px" height="69.1px" viewBox="0 0 69.1 69.1">
+                <line id="line1" x1="34.5" y1="34.5" x2="0.7" y2="0.7"/>
+                <line id="line2" x1="34.5" y1="34.5" x2="68.4" y2="0.7"/>
+                <line id="line3" x1="34.5" y1="34.5" x2="0.7" y2="68.4"/>
+                <line id="line4" x1="34.5" y1="34.5" x2="68.4" y2="68.4"/>
+            </svg>
+        </div><!--end pie container-->
+        
+        <div id="discoveryTextContainer">
+            <div id="description" class="title">
+                <h2>How we operate</h2>
+                <p>Click or tap on the areas of the pie chart to discover how our business works.</p>
+            </div>
+            <div id="titleOne" class="title">
+                <h2>Title One</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel cursus nibh. Praesent rhoncus erat ac quam congue, venenatis porttitor enim sodales. Cras vel orci mauris. Nam velit est, placerat vel malesuada ac, rutrum et dolor. Quisque feugiat, nisi sed fermentum vestibulum, urna erat rhoncus arcu, in tincidunt sapien dolor in magna.</p>
+            </div>
+            <div id="titleTwo" class="title">
+                <h2>Title Four</h2>
+                <p>Pellentesque rhoncus rhoncus sem id semper. Aenean malesuada ultricies nulla in condimentum. Cras a porta neque. Morbi non accumsan odio. Aliquam semper eros quis sem commodo, ut dictum ex maximus.</p>
+            </div>
+            <div id="titleThree" class="title">
+                <h2>Title Two</h2>
+                <p>Nam hendrerit nisi in lobortis venenatis. Ut a velit eleifend, hendrerit purus ut, venenatis diam. Duis quis semper enim. Sed pharetra posuere ornare. Donec volutpat sodales congue. Nulla finibus ex a sapien pretium mollis. Fusce ut leo et turpis varius facilisis sit amet vitae purus.</p>
+            </div>
+            <div id="titleFour" class="title">
+                <h2>Title Three</h2>
+                <p>Maecenas non semper elit. Vivamus id mollis tellus. Ut nec facilisis velit, id facilisis erat. Aliquam scelerisque elit eu augue blandit condimentum. Praesent eu ligula pellentesque, auctor neque in, mollis ex. Sed et aliquam nunc. Ut nec mattis velit. Praesent mattis ac neque a auctor. Maecenas rhoncus urna sed finibus posuere.</p>
+            </div>
+        </div>
+            <div id="preloader"></div>
+        </div><!--end discovery chart-->
+</body>
+<script>
+    var firstMove = true;
+var active;
+var tl;
+
+var g = document.getElementById('green');
+var o = document.getElementById('orange');
+var b = document.getElementById('blue');
+var r = document.getElementById('red');
+
+var dc = document.getElementById('discoveryChart');
+
+function setup() {
+	TweenMax.set('#chart', {scale: 0});
+	TweenMax.set('#lines', {scale: 1.5 });
+	TweenMax.set(['#description h2', '#titleOne h2','#titleTwo h2','#titleThree h2','#titleFour h2'], { x: '-=8' });
+	TweenMax.to('#preloader', 0.25, { autoAlpha: 0 });
+	animate();
+	listeners();
+};
+
+function animate() {
+	TweenMax.to(['#line1','#line2','#line3','#line4'], 1.25, { strokeDashoffset: 50, ease: Power3.easeInOut });
+	TweenMax.to('#chart', 1.5, { scale: 1, ease: Power3.easeOut, delay: .84 });
+	TweenMax.to(['#description h2', '#description p'], 1.5, { x: 0, autoAlpha: 1, ease: Power3.easeOut });
+	
+	tl = new TimelineMax();
+}; 
+
+function listeners() {
+	
+	g.addEventListener('click', highlightGreen);
+	
+	o.addEventListener('click', highlightOrange);
+	
+	b.addEventListener('click', highlightBlue);
+	
+	r.addEventListener('click', highlightRed);
+
+};
+
+function removeDescription() {
+	TweenMax.to(['#description h2', '#description p'], 1, { autoAlpha: 0, ease: Linear.easeNone });
+};
+
+function highlightGreen() {
+
+	removeDescription();
+	
+	if (active === 'orange') {
+		placeOrange();
+	} else if (active === 'blue') { 
+		placeBlue();
+ 	} else if (active === 'red') {
+		placeRed();
+	}
+	
+	active = 'green';
+	
+	tl.to('#green', .5, { x: -10, y: -10, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '6px solid #BCCF00', ease: Linear.easeNone });
+	tl.to('#titleOne h2', .5, { x: 0, autoAlpha: 1, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleOne p', .5, { autoAlpha: 1, ease: Linear.easeNone }, '-=.2');	
+	
+};
+function placeGreen() {
+	tl.to('#green', .5, { x: 0, y: 0, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '0px solid #EEE', ease: Linear.easeNone });
+	tl.to('#titleOne h2', .5, { x: '-=8', autoAlpha: 0, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleOne p', .5, { autoAlpha: 0, ease: Linear.easeNone }, '-=.5');
+};
+
+function highlightOrange() {
+	
+	removeDescription();
+	
+	if (active === 'blue') {
+		placeBlue();
+	} else if (active === 'green') { 
+		placeGreen();
+ 	} else if (active === 'red') {
+		placeRed();
+	}
+	
+	active = 'orange';
+	
+	tl.to('#orange', .5, { x: 8, y: -10, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '6px solid #F6A000', ease: Linear.easeNone });
+	tl.to('#titleTwo h2', .5, { x: '0', autoAlpha: 1, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleTwo p', .5, { autoAlpha: 1, ease: Linear.easeNone }, '-=.2');
+};
+function placeOrange() {
+	tl.to('#orange', .5, { x: 0, y: 0, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '0px solid #EEE', ease: Linear.easeNone });
+	tl.to('#titleTwo h2', .5, { x: '-=8', autoAlpha: 0, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleTwo p', .5, { autoAlpha: 0, ease: Linear.easeNone }, '-=.5');
+};
+
+function highlightBlue() {
+	
+	removeDescription();
+	
+	if (active === 'green') {
+		placeGreen();
+	} else if (active === 'orange') { 
+		placeOrange();
+ 	} else if (active === 'red') {
+		placeRed();
+	}
+	
+	active = 'blue';
+	
+	tl.to('#blue', .5, { x: -2, y: 12, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '6px solid #009FE3', ease: Linear.easeNone });
+	tl.to('#titleThree h2', .5, { x: '0', autoAlpha: 1, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleThree p', .5, { autoAlpha: 1, ease: Linear.easeNone }, '-=.2');
+};
+function placeBlue() {
+	tl.to('#blue', .5, { x: 0, y: 0, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '0px solid #EEE', ease: Linear.easeNone });
+	tl.to('#titleThree h2', .5, { x: '-=8', autoAlpha: 0, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleThree p', .5, { autoAlpha: 0, ease: Linear.easeNone }, '-=.5');
+};
+
+function highlightRed() {
+	
+	removeDescription();
+	
+	if (active === 'orange') {
+		placeOrange();
+	} else if (active === 'blue') { 
+		placeBlue();
+ 	} else if (active === 'green') {
+		placeGreen();
+	}
+	
+	active = 'red';
+	
+	tl.to('#red', .5, { x: 10, y: 4, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '6px solid #E84E0F', ease: Linear.easeNone });
+	tl.to('#titleFour h2', .5, { x: '0', autoAlpha: 1, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleFour p', .5, { autoAlpha: 1, ease: Linear.easeNone }, '-=.2');
+};
+function placeRed() {
+	
+	tl.to('#red', .5, { x: 0, y: 0, ease: Power3.easeOut });
+	tl.to('#discoveryTextContainer', .5, { borderLeft: '0px solid #EEE', ease: Linear.easeNone });
+	tl.to('#titleFour h2', .5, { x: '-=8', autoAlpha: 0, ease: Linear.easeNone }, '-=0.5');
+	tl.to('#titleFour p', .5, { autoAlpha: 0, ease: Linear.easeNone }, '-=.5');
+
+};
+
+document.addEventListener("DOMContentLoaded", setup);
+</script>
+</html>
